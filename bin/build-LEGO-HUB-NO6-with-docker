@@ -1,0 +1,13 @@
+#!/usr/bin/env bash 
+set -euo pipefail
+PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd .. > /dev/null 2>&1 && pwd -P)"
+
+cd $PROJECT_DIR
+
+docker build -t pybricks-spike:latest .
+
+docker run \
+  -v .:/pybricks-micropython_wrapper \
+  -it pybricks-spike:latest pybricks-micropython_wrapper/scripts/build-lego-hub-no6-firmware
+
+# vi: ft=sh

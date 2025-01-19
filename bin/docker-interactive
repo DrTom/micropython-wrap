@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -euo pipefail
+PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd .. > /dev/null 2>&1 && pwd -P)"
+
+cd $PROJECT_DIR
+
+docker build -t circuitpython-wrap:latest .
+
+# Try `--no-cache` to force a rebuild:
+# docker build --no-cache -t circuitpython-wrap:latest .
+
+
+
+docker run \
+  -v .:/circuitpython-wrap \
+  -it circuitpython-wrap:latest /bin/bash
+
+# vi: ft=sh

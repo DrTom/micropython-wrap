@@ -1,0 +1,13 @@
+#!/usr/bin/env bash 
+set -euo pipefail
+
+cd /pybricks-micropython_wrapper/pybricks-micropython/micropython
+make -C mpy-cross
+
+cd ports/stm32
+make BOARD=LEGO_HUB_NO6 clean
+make BOARD=LEGO_HUB_NO6 submodules
+make BOARD=LEGO_HUB_NO6
+
+# vi: ft=sh
+
