@@ -38,6 +38,9 @@
 #define MICROPY_HW_UART3_CTS    (pin_B13)
 #define MICROPY_HW_UART4_TX     (pin_A0)
 #define MICROPY_HW_UART4_RX     (pin_A1)
+#define MICROPY_HW_UART6_NAME   "UART5"   // on C12/D2
+#define MICROPY_HW_UART5_TX     (pin_C12)
+#define MICROPY_HW_UART5_RX     (pin_D2)
 #define MICROPY_HW_UART6_TX     (pin_C6)
 #define MICROPY_HW_UART6_RX     (pin_C7)
 
