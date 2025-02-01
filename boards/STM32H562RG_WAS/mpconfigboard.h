@@ -7,32 +7,52 @@
 #define MICROPY_HW_ENABLE_DAC               (1)
 #define MICROPY_HW_ENABLE_RNG               (1)
 #define MICROPY_HW_ENABLE_RTC               (1)
-#define MICROPY_HW_ENABLE_SDCARD    	    (0)
-#define MICROPY_HW_ENABLE_TIMER     	    (1)
+#define MICROPY_HW_ENABLE_SDCARD    	      (1)
+#define MICROPY_HW_ENABLE_TIMER     	      (1)
 #define MICROPY_HW_ENABLE_USB               (1)
 #define MICROPY_HW_HAS_FLASH                (1)
-#define MICROPY_HW_HAS_LCD          (0)
-#define MICROPY_HW_HAS_MMA7660      (0)
+#define MICROPY_HW_HAS_LCD                  (0)
+#define MICROPY_HW_HAS_MMA7660              (0)
 #define MICROPY_HW_HAS_SWITCH               (1)
 #define MICROPY_PY_PYB_LEGACY               (0)
-// #define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
+#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
 
 
+// PCLK1 PLCK2 respectively APB1 and APB2 seem to be clocked with the same
+// frequency of the CPU; this seems wrong, it causes the UART (and likely other
+// things) to not work properly
+
+// The board does not start up with 250M CPU clock (possibly related to the
+// notes above) for now we use 200MHz with internal HSI:
+
+#if 0
 // The board has a 8MHz oscillator, the following gives 250MHz CPU speed
-//#define MICROPY_HW_CLK_USE_BYPASS           (1)
-#define MICROPY_HW_CLK_USE_HSE         	    (1)
-#define MICROPY_HW_CLK_PLLM                 (4)
-#define MICROPY_HW_CLK_PLLN                 (160)
+#define MICROPY_HW_CLK_USE_BYPASS           (1)
+#define MICROPY_HW_CLK_PLLM                 (2)
+#define MICROPY_HW_CLK_PLLN                 (125)
 #define MICROPY_HW_CLK_PLLP                 (2)
 #define MICROPY_HW_CLK_PLLQ                 (2)
 #define MICROPY_HW_CLK_PLLR                 (2)
-#define MICROPY_HW_CLK_PLLVCI_LL            (LL_RCC_PLLINPUTRANGE_2_4)
+#define MICROPY_HW_CLK_PLLVCI_LL            (LL_RCC_PLLINPUTRANGE_4_8)
 #define MICROPY_HW_CLK_PLLVCO_LL            (LL_RCC_PLLVCORANGE_WIDE)
 #define MICROPY_HW_CLK_PLLFRAC              (0)
+#define MICROPY_HW_FLASH_LATENCY            FLASH_LATENCY_5
+#else
+// Use 64MHz HSI to clock the CPU at 200MHz
+#define MICROPY_HW_CLK_USE_HSI              (1) // 64MHz
+#define MICROPY_HW_CLK_PLLM                 (16)
+#define MICROPY_HW_CLK_PLLN                 (100)
+#define MICROPY_HW_CLK_PLLP                 (2)
+#define MICROPY_HW_CLK_PLLQ                 (2)
+#define MICROPY_HW_CLK_PLLR                 (2)
+#define MICROPY_HW_CLK_PLLVCI_LL            (LL_RCC_PLLINPUTRANGE_4_8)
+#define MICROPY_HW_CLK_PLLVCO_LL            (LL_RCC_PLLVCORANGE_WIDE)
+#define MICROPY_HW_CLK_PLLFRAC              (0)
+#define MICROPY_HW_FLASH_LATENCY            FLASH_LATENCY_4 // VOS0, 168-210MHz
+#endif
 
 // PLL3 with Q output at 48MHz for USB
-// #define MICROPY_HW_CLK_USE_PLL3_FOR_USB
-#define MICROPY_HW_CLK_PLL3M                (8)
+#define MICROPY_HW_CLK_PLL3M                (25)
 #define MICROPY_HW_CLK_PLL3N                (192)
 #define MICROPY_HW_CLK_PLL3P                (2)
 #define MICROPY_HW_CLK_PLL3Q                (4)
@@ -41,8 +61,6 @@
 #define MICROPY_HW_CLK_PLL3VCI_LL           (LL_RCC_PLLINPUTRANGE_1_2)
 #define MICROPY_HW_CLK_PLL3VCO_LL           (LL_RCC_PLLVCORANGE_MEDIUM)
 
-// 5 wait states, according to Table 37, Reference Manual (RM0481 Rev 1)
-#define MICROPY_HW_FLASH_LATENCY            FLASH_LATENCY_5
 
 // There is an external 32kHz oscillator
 #define MICROPY_HW_RTC_USE_LSE              (1)

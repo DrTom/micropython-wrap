@@ -67,12 +67,14 @@ STM32H562GT6 WAS
 
 ### System
 
-There are a few things that seem to wrong or could be improved in the current
-build.
+There are a few things that seem to wrong or could be improved:
 
-* CPU frequency seems not to be set correctly.
+* CPU frequency shoulbe increased to 250MHz from 200MHz; currently
+    the board crashes when trying to set the frequency to 250MHz.
+
 * Bus frequency seems not to be set correctly which might cause the UART to
-  misbehave: https://github.com/orgs/micropython/discussions/16679
+    misbehave: https://github.com/orgs/micropython/discussions/16679
+
 * There should be more flash space available.
 
 
@@ -82,7 +84,7 @@ build.
 ```
 >>> import machine
 >>> machine.freq()
-(160000000, 160000000, 160000000, 160000000)
+(200000000, 200000000, 200000000, 200000000)
 ```
 
 
