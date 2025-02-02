@@ -61,6 +61,16 @@
 #define MICROPY_HW_CLK_PLL3VCI_LL           (LL_RCC_PLLINPUTRANGE_1_2)
 #define MICROPY_HW_CLK_PLL3VCO_LL           (LL_RCC_PLLVCORANGE_MEDIUM)
 
+// Bus clock divider values
+// NOTE and WARNING these settings HAVE NO EFFECT (yet) since the STM32H5 series
+// is not considered in the micropython source code (particular system_stm32.c)
+// see also https://github.com/orgs/micropython/discussions/16679#discussioncomment-12032084
+#define MICROPY_HW_CLK_AHB_DIV          (RCC_HCLK_DIV2)
+#define MICROPY_HW_CLK_APB1_DIV         (RCC_APB1_DIV2)
+#define MICROPY_HW_CLK_APB2_DIV         (RCC_APB2_DIV2)
+#define MICROPY_HW_CLK_APB3_DIV         (RCC_APB3_DIV2)
+#define MICROPY_HW_CLK_APB4_DIV         (RCC_APB4_DIV2)
+
 
 // There is an external 32kHz oscillator
 #define MICROPY_HW_RTC_USE_LSE              (1)

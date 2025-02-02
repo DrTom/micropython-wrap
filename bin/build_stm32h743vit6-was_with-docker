@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd .. > /dev/null 2>&1 && pwd -P)"
+
+# git submodupe update --init --recursive --force
+
+cd $PROJECT_DIR
+
+rm -rf micropython/ports/stm32/boards/STM32H743VIT6_WAS
+cp -r boards/STM32H743VIT6_WAS micropython/ports/stm32/boards/STM32H743VIT6_WAS
+
+docker build -t micropython:latest .
+
+docker run \
+  -v .:/micropython-wrap \
+  -it micropython:latest /micropython-wrap/scripts/build-STM32H743VIT6_WAS
+
+#/scripts/build-pybricks-firmware
+
+# vim: set ft=sh

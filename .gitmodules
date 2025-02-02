@@ -7,3 +7,6 @@
 [submodule "docs/WeActStudio.STM32H5_64Pin_CoreBoard"]
 	path = docs/WeActStudio.STM32H5_64Pin_CoreBoard
 	url = https://github.com/WeActStudio/WeActStudio.STM32H5_64Pin_CoreBoard
+[submodule "docs/WeActStudio.MiniSTM32H7xx"]
+	path = docs/WeActStudio.MiniSTM32H7xx
+	url = https://github.com/WeActStudio/MiniSTM32H7xx.git

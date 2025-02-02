@@ -114,3 +114,9 @@ free 18944
 
 ```
 
+STM32H743VIT6 WAS
+-----------------
+https://github.com/orgs/micropython/discussions/16159
+
+
+

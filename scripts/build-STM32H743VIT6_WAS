@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd /micropython-wrap/
+
+
+cd /micropython-wrap/micropython
+make -C mpy-cross
+
+cd ports/stm32
+make submodules
+make BOARD=STM32H743VIT6_WAS clean
+make BOARD=STM32H743VIT6_WAS submodules
+make BOARD=STM32H743VIT6_WAS
+
+# vi: ft=sh
