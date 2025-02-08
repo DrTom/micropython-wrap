@@ -10,3 +10,6 @@
 [submodule "docs/WeActStudio.MiniSTM32H7xx"]
 	path = docs/WeActStudio.MiniSTM32H7xx
 	url = https://github.com/WeActStudio/MiniSTM32H7xx.git
+[submodule "st7789_mpy"]
+	path = st7789_mpy
+	url = https://github.com/russhughes/st7789_mpy

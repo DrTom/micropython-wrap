@@ -11,6 +11,6 @@ cd ports/stm32
 make submodules
 make BOARD=STM32H743VIT6_WAS clean
 make BOARD=STM32H743VIT6_WAS submodules
-make BOARD=STM32H743VIT6_WAS
+make USER_C_MODULES=../../../st7789_mpy BOARD=STM32H743VIT6_WAS
 
 # vi: ft=sh

@@ -1,13 +1,29 @@
 micropython-wrap
 ================
 
-Building MicroPython for the WAS STM32F405, and STM32H562 boards
+This project contains configurations and scripts for building MicroPython
+via Docker for the following boards:
 
-Build:
+* [WAS STM32F405RGT6][WAS-STM32F405RGT6]
+* [WAS STM32H562GT6][WAS-STM32H562GT6]
+* [WAS STM32H743VIT6][WAS-STM32H743VIT6]
+
+All of these board are not officially supported by MicroPython. The
+configurations have been stiched together from various sources. The F4 and H7
+boards are in a good state. There are a few probems with the H5 board, see
+below.
+
+
+### Building
+
 
     ./bin/build-was-stm32f405-with-docker
 
-Hold the `BOOT0` button on the board and press the `RESET` button to enter the DFU mode.
+### Flashing
+
+Hold the `BOOT` button during power up of the device  or when the device is
+alredy powered up  hold the `BOOT` button and press the `RESET` button to enter
+the DFU mode.
 
 Flashing the firmware:
 
@@ -15,7 +31,7 @@ Flashing the firmware:
 
 
 
-STM32F405RGT6 WAS
+WAS STM32F405RGT6
 -----------------
 
 
@@ -60,7 +76,7 @@ https://github.com/orgs/micropython/discussions/16518 seems interesting.
 
 
 
-STM32H562GT6 WAS
+WAS STM32H562GT6
 ----------------
 
 
@@ -75,7 +91,8 @@ There are a few things that seem to wrong or could be improved:
 * Bus frequency seems not to be set correctly which might cause the UART to
     misbehave: https://github.com/orgs/micropython/discussions/16679
 
-* There should be more flash space available.
+* There should be more flash space available. The F4 board has only half the
+    flash space but the filesystem reports roughtly the same amount of free space.
 
 
 
@@ -114,9 +131,23 @@ free 18944
 
 ```
 
-STM32H743VIT6 WAS
+WAS STM32H743VIT6
 -----------------
-https://github.com/orgs/micropython/discussions/16159
+
+An almost plain MicroPython configuration for the WAS STM32H743VIT6 board. It
+includes the `st7789` display driver. Note that this in particular **not
+OpenMV MicroPython**.
 
 
+The build for this board includes the [ST7789 display driver](https://github.com/russhughes/st7789_mpy). See
+[jkorte's STM32H723VGT6 configuration][jkorte-STM32H723VGT6] for examples.
 
+### See also
+
+* https://github.com/orgs/micropython/discussions/16159
+* https://github.com/jkorte-dev/micropython-board-STM32H723VGT6
+
+[jkorte-STM32H723VGT6]: https://github.com/jkorte-dev/micropython-board-STM32H723VGT6
+[WAS-STM32F405RGT6]: https://github.com/WeActStudio/WeActStudio.STM32F4_64Pin_CoreBoard
+[WAS-STM32H562GT6]: https://github.com/WeActStudio/WeActStudio.STM32H5_64Pin_CoreBoard
+[WAS-STM32H743VIT6]: https://github.com/WeActStudio/MiniSTM32H7xx
