@@ -6,14 +6,13 @@ PROJECT_DIR="$(cd -- "$(dirname "${BASH_SOURCE}")" ; cd .. > /dev/null 2>&1 && p
 
 cd $PROJECT_DIR
 
-rm -rf micropython/ports/stm32/boards/STM32H562RG_WAS
-cp -r boards/STM32H562RG_WAS micropython/ports/stm32/boards/STM32H562RG_WAS
+rm -rf micropython/ports/stm32/boards/STM32H723VGT6_WAS
+cp -r boards/STM32H723VGT6_WAS micropython/ports/stm32/boards/STM32H723VGT6_WAS
 
 docker build -t micropython:latest .
 
 docker run \
   -v .:/micropython-wrap \
-  -it micropython:latest /micropython-wrap/scripts/build-STM32H562RG_WAS
-
+  -it micropython:latest /micropython-wrap/scripts/build-STM32H723VGT6_WAS
 
 # vim: set ft=sh

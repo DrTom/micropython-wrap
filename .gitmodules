@@ -13,3 +13,9 @@
 [submodule "st7789_mpy"]
 	path = st7789_mpy
 	url = https://github.com/russhughes/st7789_mpy
+[submodule "docs/WeActStudio.MiniSTM32H723"]
+	path = docs/WeActStudio.MiniSTM32H723
+	url = https://github.com/WeActStudio/WeActStudio.MiniSTM32H723
+[submodule "docs/jkorte-mp-STM32H723VGT6"]
+	path = docs/jkorte-mp-STM32H723VGT6
+	url = https://github.com/jkorte-dev/micropython-board-STM32H723VGT6
