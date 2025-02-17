@@ -172,8 +172,12 @@ extern struct _spi_bdev_t spi_bdev;
 // https://community.st.com/t5/embedded-software-mcus/issue-with-bootloader-on-stm32h743-using-boot0-and-inline/td-p/73183
 
 // CAN buses
-#define MICROPY_HW_CAN1_TX (pin_B9)
-#define MICROPY_HW_CAN1_RX (pin_B8)
+#define MICROPY_HW_CAN1_TX (pin_A12) // PA12, D1, B9
+#define MICROPY_HW_CAN1_RX (pin_A11) // PA11, D0, B8
+
+#define MICROPY_HW_CAN2_TX (pin_B13) // B13, B6
+#define MICROPY_HW_CAN2_RX (pin_B12) // B12, B5
+
 
 // USRSW
 #define MICROPY_HW_USRSW_PIN (pin_C13) // K1 on the board.
@@ -198,13 +202,3 @@ extern struct _spi_bdev_t spi_bdev;
 // USB config
 #define MICROPY_HW_USB_FS (1)
 
-// Ethernet via RMII
-#define MICROPY_HW_ETH_MDC          (pin_C1)
-#define MICROPY_HW_ETH_MDIO         (pin_A2)
-#define MICROPY_HW_ETH_RMII_REF_CLK (pin_A1)
-#define MICROPY_HW_ETH_RMII_CRS_DV  (pin_A7)
-#define MICROPY_HW_ETH_RMII_RXD0    (pin_C4)
-#define MICROPY_HW_ETH_RMII_RXD1    (pin_C5)
-#define MICROPY_HW_ETH_RMII_TX_EN   (pin_B11)
-#define MICROPY_HW_ETH_RMII_TXD0    (pin_B12)
-#define MICROPY_HW_ETH_RMII_TXD1    (pin_B13)
