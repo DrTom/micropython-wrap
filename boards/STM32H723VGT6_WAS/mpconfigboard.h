@@ -17,6 +17,9 @@
 #define MICROPY_HW_HAS_SWITCH       (1)
 #define MICROPY_HW_HAS_FLASH        (1)
 
+// Flash storage config
+#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
+
 #define FDCAN_FILTER_RANGE         ((uint32_t)0x00000000U) /*!< Range filter from FilterID1 to FilterID2                        */
 #define FDCAN_FILTER_DUAL          ((uint32_t)0x00000001U) /*!< Dual ID filter for FilterID1 or FilterID2                       */
 #define FDCAN_FILTER_MASK          ((uint32_t)0x00000002U) /*!< Classic filter: FilterID1 = filter, FilterID2 = mask            */
@@ -48,29 +51,30 @@
 // The board has an external 32kHz crystal attached for RTC
 //#define MICROPY_HW_RTC_USE_LSE              (1)
 
-// UART1 config
+
+// UART #################################################
+
+// UART1
 #define MICROPY_HW_UART1_TX  (pin_A9)  // Feedback?
 #define MICROPY_HW_UART1_RX  (pin_A10) // Feedback?
-#define MICROPY_HW_UART_REPL        PYB_UART_1
-#define MICROPY_HW_UART_REPL_BAUD   115200
 
-// UART2 config
+// UART2
 #define MICROPY_HW_UART2_TX  (pin_A2) // Feedback?
 #define MICROPY_HW_UART2_RX  (pin_A3) // Feedback?
 
-// UART3 config
-#define MICROPY_HW_UART3_TX  (pin_B10) // OK
-#define MICROPY_HW_UART3_RX  (pin_B11) // OK
+// UART3
+#define MICROPY_HW_UART3_TX  (pin_D8) // OK
+#define MICROPY_HW_UART3_RX  (pin_D9) // OK
 
-// UART4 config
-#define MICROPY_HW_UART4_TX  (pin_C11) // OK
-#define MICROPY_HW_UART4_RX  (pin_C10) // OK
+// UART4
+#define MICROPY_HW_UART4_TX  (pin_A0) // OK
+#define MICROPY_HW_UART4_RX  (pin_A1) // OK
 
-// UART5 config
-#define MICROPY_HW_UART5_TX  (pin_B12) // OK
-#define MICROPY_HW_UART5_RX  (pin_B13) // OK
+// UART5
+#define MICROPY_HW_UART5_TX  (pin_C12) // OK
+#define MICROPY_HW_UART5_RX  (pin_D2) // OK
 
-// UART6 config
+// UART6
 #define MICROPY_HW_UART6_TX  (pin_C6) // OK
 #define MICROPY_HW_UART6_RX  (pin_C7) // OK
 
@@ -86,21 +90,22 @@
 #define MICROPY_HW_UART9_TX  (pin_D15) // ERROR
 #define MICROPY_HW_UART9_RX  (pin_D14) // ERROR
 
-// UART10 config
-//
-#define MICROPY_HW_UART10_TX  (pin_E3) // LED, ERROR, UART(10) doesn't exist
-#define MICROPY_HW_UART10_RX  (pin_E2) // OSPIFLASH,
 
-// ###########################################################################
+// I2C /////////////////////////////////////////////////
 
-// I2C buses
-#define MICROPY_HW_I2C2_SCL (pin_B10)
-#define MICROPY_HW_I2C2_SDA (pin_B11)
+#define MICROPY_HW_I2C1_SCL (pin_B8)  // B6, B8
+#define MICROPY_HW_I2C1_SDA (pin_B9)  // B7, B9
 
-#define MICROPY_HW_I2C4_SCL (pin_D12)
-#define MICROPY_HW_I2C4_SDA (pin_D13)
+#define MICROPY_HW_I2C2_SCL (pin_B10) // B10,
+#define MICROPY_HW_I2C2_SDA (pin_B11) // B11,
 
-// SPI buses
+#define MICROPY_HW_I2C3_SCL (pin_A8) // A8
+#define MICROPY_HW_I2C3_SDA (pin_C9) // C9
+
+#define MICROPY_HW_I2C4_SCL (pin_D12) // D12
+#define MICROPY_HW_I2C4_SDA (pin_D13) // D13, B7, B9
+
+// SPI buses /////////////////////////////////////////////////
 #define MICROPY_HW_SPI1_NAME "SPIFLASH"
 #define MICROPY_HW_SPI1_NSS  (pin_D6)  // FLASH CS
 #define MICROPY_HW_SPI1_SCK  (pin_B3)  // FLASH CLK
@@ -112,12 +117,22 @@
 #define MICROPY_HW_SPI2_MISO (pin_B14)
 #define MICROPY_HW_SPI2_MOSI (pin_B15)
 
+// SPI4 seems to be used for the LCD
 #define MICROPY_HW_SPI4_NSS  (pin_E11)
 #define MICROPY_HW_SPI4_SCK  (pin_E12)
 #define MICROPY_HW_SPI4_MISO (pin_E13)
 #define MICROPY_HW_SPI4_MOSI (pin_E14)
 
-// FDCAN bus
+
+// disable internal flash
+#define MICROPY_HW_QSPIFLASH_CS (pin_B6)
+#define MICROPY_HW_QSPIFLASH_CS_PULL (GPIO_PULLUP)
+
+#define MICROPY_HW_SPIFLASH_NSS  (pin_D6)  // FLASH CS
+#define MICROPY_HW_SPIFLASH_NSS_PULL  (GPIO_PULLUP)
+
+
+// FDCAN bus /////////////////////////////////////////////////
 #define MICROPY_HW_CAN1_NAME  "FDCAN1"
 #define MICROPY_HW_CAN1_TX    (pin_D1)
 #define MICROPY_HW_CAN1_RX    (pin_D0)
@@ -126,11 +141,9 @@
 #define MICROPY_HW_CAN2_TX    (pin_B13)
 #define MICROPY_HW_CAN2_RX    (pin_B12)
 
-// I2S buses
-//#define MICROPY_HW_I2S1             (1)
-//#define MICROPY_HW_I2S2             (1) // is correct but does not compile
 
-// SD Card SDMMC
+
+// SD Card SDMMC /////////////////////////////////////////////////
 #define MICROPY_HW_SDCARD_SDMMC             (1)
 #define MICROPY_HW_SDCARD_CK                (pin_C12) // default SDMMC1
 #define MICROPY_HW_SDCARD_CMD               (pin_D2)  // default SDMMC1
@@ -144,7 +157,7 @@
 
 #define MICROPY_HW_SDCARD_MOUNT_AT_BOOT     (1)
 
-// USB config
+// USB config /////////////////////////////////////////////////
 #define MICROPY_HW_ENABLE_USB               (1)
 #define MICROPY_HW_RCC_HSI48_STATE          (RCC_HSI48_ON)
 #define MICROPY_HW_RCC_USB_CLKSOURCE        (RCC_USBCLKSOURCE_HSI48)
@@ -154,12 +167,14 @@
 //#define MICROPY_HW_USB_VBUS_DETECT_PIN      (pin_A9)
 //#define MICROPY_HW_USB_OTG_ID_PIN           (pin_A10)
 
-// USER SWITCH is pulled low. Pressing the button makes the input go high.
+// USER SWITCH /////////////////////////////////////////////////
+// is pulled low. Pressing the button makes the input go high.
 #define MICROPY_HW_USRSW_PIN                (pin_C13)
 #define MICROPY_HW_USRSW_PULL               (GPIO_NOPULL)
 #define MICROPY_HW_USRSW_EXTI_MODE          (GPIO_MODE_IT_RISING)
 #define MICROPY_HW_USRSW_PRESSED            (1)
 
+// LEDs /////////////////////////////////////////////////
 // LED is active high.
 #define MICROPY_HW_LED1             (pin_E3) // blue
 #define MICROPY_HW_LED_OTYPE        (GPIO_MODE_OUTPUT_PP)
@@ -167,45 +182,4 @@
 #define MICROPY_HW_LED_OFF(pin)             (mp_hal_pin_low(pin))
 
 
-// 0 = use external onboard SPI flash (8 MByte), 1 = use internal flash
-#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
 
-
-#if !MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE
-#define WEACT_USE_QSPI_FLASH_STORAGE             (1) // QUAD-SPI (1) or normal SPI (0)
-
-#define MICROPY_HW_SPIFLASH_SIZE_BITS            (64 * 1024 * 1024) // 8MB external flash
-#define MICROPY_HW_SPIFLASH_ENABLE_CACHE         (1)
-
-extern const struct _mp_spiflash_config_t spiflash_config;
-extern struct _spi_bdev_t spi_bdev;
-#define MICROPY_HW_BDEV_SPIFLASH    (&spi_bdev)
-#define MICROPY_HW_BDEV_SPIFLASH_CONFIG (&spiflash_config)
-#define MICROPY_HW_BDEV_SPIFLASH_SIZE_BYTES (MICROPY_HW_SPIFLASH_SIZE_BITS / 8)
-#define MICROPY_HW_BDEV_SPIFLASH_EXTENDED (&spi_bdev) // for extended block protocol
-
-#if WEACT_USE_QSPI_FLASH_STORAGE
-// OCTOSPI in dual QSPI mode (needs mod in stm32h723_af.csv and patch in octospi.c
-#ifdef WEACT_USE_OCTOSPI
-#define MICROPY_HW_OSPIFLASH_SIZE_BITS_LOG2 (26) // HW OCTOSPI/QSPI
-#endif
-#define MICROPY_HW_OSPIFLASH_CS             (pin_B6)
-#define MICROPY_HW_OSPIFLASH_SCK            (pin_B2)
-#define MICROPY_HW_OSPIFLASH_IO0            (pin_D11)
-#define MICROPY_HW_OSPIFLASH_IO1            (pin_D12)
-#define MICROPY_HW_OSPIFLASH_IO2            (pin_E2)
-#define MICROPY_HW_OSPIFLASH_IO3            (pin_D13)
-//#define MICROPY_HW_OSPIFLASH_IO4            (pin_C1) //C1
-//#define MICROPY_HW_OSPIFLASH_IO5            (pin_C2) //C2
-//#define MICROPY_HW_OSPIFLASH_IO6            (pin_E9) //C3
-//#define MICROPY_HW_OSPIFLASH_IO7            (pin_E10)  //?
-
-#else
-// SPI Flash 64MBits on SPI1
-#define MICROPY_HW_SPIFLASH_CS      (MICROPY_HW_SPI1_NSS)  // (pin_D6)
-#define MICROPY_HW_SPIFLASH_SCK     (MICROPY_HW_SPI1_SCK)  // (pin_B3)
-#define MICROPY_HW_SPIFLASH_MISO    (MICROPY_HW_SPI1_MISO) // (pin_B4)
-#define MICROPY_HW_SPIFLASH_MOSI    (MICROPY_HW_SPI1_MOSI) // (pin_D7)
-#endif
-
-#endif

@@ -142,6 +142,31 @@ OpenMV MicroPython**.
 The build for this board includes the [ST7789 display driver](https://github.com/russhughes/st7789_mpy). See
 [jkorte's STM32H723VGT6 configuration][jkorte-STM32H723VGT6] for examples.
 
+
+WAS STM32H723VGT6
+-----------------
+
+TLDR: it is hadly worth bothering with this board because of the very limited
+available RAM.
+
+
+The board basically works. SPI flash memory is not enabled and it seems to be
+problematic to use it, however SDCards seem to work fine. IO buses are not
+tested. UART 10 certainly does not work.
+
+Big drawback with MicroPython on this board is the very limited RAM:
+
+```
+>>> gc.mem_free()
+99776
+```
+
+The STM32H743VIT6 shows about five times as much.
+
+
+
+
+
 ### See also
 
 * https://github.com/orgs/micropython/discussions/16159
