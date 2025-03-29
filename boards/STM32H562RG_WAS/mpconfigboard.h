@@ -18,9 +18,9 @@
 // #define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
 
 
-# initially clock with 16 MHz HSE
-# then change the frequency from micropthon to 250 MHz
-# with machine.freq(250000000)
+//  initially clock with 160MHz HSE
+//  then change the frequency from micropthon to 250MHz
+//  with machine.freq(250000000)
 
 //#define MICROPY_HW_CLK_USE_BYPASS           (1)
 #define MICROPY_HW_CLK_USE_HSE         	    (1)

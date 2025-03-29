@@ -16,7 +16,8 @@
 #define MICROPY_HW_ENABLE_MMCARD (0)
 
 // Flash storage config
-#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (1)
+#define MICROPY_HW_SPIFLASH_ENABLE_CACHE (1)
+#define MICROPY_HW_ENABLE_INTERNAL_FLASH_STORAGE (0)
 
 // Clock config
 #define MICROPY_HW_CLK_PLLM (5)
@@ -54,7 +55,6 @@
 #define MICROPY_HW_QSPIFLASH_SIZE_BITS_LOG2 (26)
 #define MICROPY_HW_SPIFLASH_SIZE_BITS (64 * 1024 * 1024)
 #define MICROPY_HW_QSPIFLASH_CS (pin_B6)
-#define MICROPY_HW_QSPIFLASH_CS_PULL (GPIO_PULLUP)
 #define MICROPY_HW_QSPIFLASH_SCK (pin_B2)
 #define MICROPY_HW_QSPIFLASH_IO0 (pin_D11)
 #define MICROPY_HW_QSPIFLASH_IO1 (pin_D12)
@@ -84,34 +84,42 @@ extern struct _spi_bdev_t spi_bdev;
 // UART #################################################
 
 // USART1
+#define MICROPY_HW_UART1_NAME   "F"
 #define MICROPY_HW_UART1_TX     (pin_A9)  // A9,B6,B14
 #define MICROPY_HW_UART1_RX     (pin_A10) // A10,B7,B15
 
 // USART2
+#define MICROPY_HW_UART2_NAME   "E"
 #define MICROPY_HW_UART2_TX     (pin_A2) // A2,D5
 #define MICROPY_HW_UART2_RX     (pin_A3) // A3,D6
 
 // USART3
+#define MICROPY_HW_UART3_NAME   "H"
 #define MICROPY_HW_UART3_TX     (pin_D8) // B10,C10,D8
 #define MICROPY_HW_UART3_RX     (pin_D9) // B11,C11,D9
 
 // UART4
+#define MICROPY_HW_UART4_NAME   "C"
 #define MICROPY_HW_UART4_TX     (pin_A0) // A0,A12,B9,C10,D1
 #define MICROPY_HW_UART4_RX     (pin_A1) // A1,A11,B8,C11,D0
 
-// UART5
-#define MICROPY_HW_UART5_TX     (pin_B6) // B6,B13,C12
-#define MICROPY_HW_UART5_RX     (pin_B5)  // B5,B12,D2
+// UART5, conflicts with Can2!
+#define MICROPY_HW_UART5_NAME   "G"
+#define MICROPY_HW_UART5_TX     (pin_B13) // B6,B13,C12
+#define MICROPY_HW_UART5_RX     (pin_B12) // B5,B12,D2
 
 // USART6
+#define MICROPY_HW_UART6_NAME   "D"
 #define MICROPY_HW_UART6_TX     (pin_C6) // C6
 #define MICROPY_HW_UART6_RX     (pin_C7) // C7
 
 // UART7
+#define MICROPY_HW_UART7_NAME   "B"
 #define MICROPY_HW_UART7_TX     (pin_E8) // A15,B4,E8
 #define MICROPY_HW_UART7_RX     (pin_E7) // A8,B3,E7
 
 // UART8
+#define MICROPY_HW_UART8_NAME   "A"
 #define MICROPY_HW_UART8_TX     (pin_E1) // E1
 #define MICROPY_HW_UART8_RX     (pin_E0) // E0
 
@@ -126,12 +134,12 @@ extern struct _spi_bdev_t spi_bdev;
 // C9 conflicts with SD
 #define MICROPY_HW_I2C3_SCL (pin_A8) // A8,H7
 #define MICROPY_HW_I2C3_SDA (pin_C9) // C9,H8
-
+                                     //
+// D12 conflicts with SD
 #define MICROPY_HW_I2C4_SCL (pin_D12) // B6,B8,D12,F14
 #define MICROPY_HW_I2C4_SDA (pin_D13) // B7,B9,D13,F15
 
 // SPI buses /////////////////////////////////////////////////
-// NOTE: SPI3 is used for the QSPI flash.
 #define MICROPY_HW_SPI1_NSS  (pin_A4) // A4,A15
 #define MICROPY_HW_SPI1_SCK  (pin_A5) // A5,B3
 #define MICROPY_HW_SPI1_MISO (pin_A6) // A6,B4
@@ -142,12 +150,14 @@ extern struct _spi_bdev_t spi_bdev;
 #define MICROPY_HW_SPI2_MISO (pin_B14) // B14,C2
 #define MICROPY_HW_SPI2_MOSI (pin_B15) // B15,C1,C3
 
-#define MICROPY_HW_SPI3_NSS  (pin_A15) // A4,A15
+// SPI3 is used for the QSPI flash;
+#define MICROPY_HW_SPI3_NSS  (pin_B6) // A4,A15
 #define MICROPY_HW_SPI3_SCK  (pin_B3)  // C10,B3
 #define MICROPY_HW_SPI3_MISO (pin_B4)  // B4,C11
 #define MICROPY_HW_SPI3_MOSI (pin_B2)  // B2,B5,C12,D6
 
-// display
+// SPI4 is used for the display
+// pin_E10 LCD_LED
 #define MICROPY_HW_SPI4_NSS (pin_E11)
 #define MICROPY_HW_SPI4_SCK (pin_E12)
 #define MICROPY_HW_SPI4_MOSI (pin_E14)
@@ -156,9 +166,12 @@ extern struct _spi_bdev_t spi_bdev;
 // https://community.st.com/t5/embedded-software-mcus/issue-with-bootloader-on-stm32h743-using-boot0-and-inline/td-p/73183
 
 // FDCAN bus /////////////////////////////////////////////////
-#define MICROPY_HW_CAN1_TX (pin_D1) // PA12, D1, B9
-#define MICROPY_HW_CAN1_RX (pin_D0) // PA11, D0, B8
+#define MICROPY_HW_CAN1_NAME   "J"
+#define MICROPY_HW_CAN1_TX (pin_A12) // PA12, D1, B9
+#define MICROPY_HW_CAN1_RX (pin_A11) // PA11, D0, B8
 
+// conflicts with UART5!
+#define MICROPY_HW_CAN2_NAME   "G"
 #define MICROPY_HW_CAN2_TX (pin_B13) // B13, B6
 #define MICROPY_HW_CAN2_RX (pin_B12) // B12, B5
 
